@@ -36,7 +36,7 @@ first_checkout = True
 links_file = "game-links"
 data_file = "game-data"
 
-CHANNEL_ID = 1247978910210326568
+CHANNEL_ID = 1262827372437311490
 
 
 cookies = {
@@ -230,10 +230,10 @@ async def checkout_items(url, buy_count):
                     "--disable-dev-shm-usage"
                 ])
 
-            context = await browser.new_context(
-                viewport={"width": 1920, "height": 1080}
-            )
+            context = await browser.new_context(viewport={"width": 1920, "height": 1080},
+                                                user_agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 14_5_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.6422.77 Safari/537.36")
             page = await context.new_page()
+            await page.set_extra_http_headers({"sec-ch-ua": '"Chromium";v="125", "Not.A/Brand";v="24"'})
 
             await page.goto(url)
 

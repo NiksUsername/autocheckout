@@ -36,7 +36,7 @@ first_checkout = True
 links_file = "argos-links"
 data_file = "argos-data"
 
-CHANNEL_ID = 1248232866328870984
+CHANNEL_ID = 1262827352400990308
 
 
 cookies = {
@@ -333,11 +333,12 @@ async def checkout_items(url, count):
 
     try:
         async with async_playwright() as p:
-            browser = await p.chromium.launch(headless=False, args=["--disable-blink-features=AutomationControlled",
+            browser = await p.chromium.launch(args=["--disable-blink-features=AutomationControlled",
                                                                     "--disable-dev-shm-usage"])
             context = await browser.new_context(viewport={"width": 1920, "height": 1080},
-                                                user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36")
+                                                user_agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 14_5_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.6422.77 Safari/537.36")
             page = await context.new_page()
+            await page.set_extra_http_headers({"sec-ch-ua": '"Chromium";v="125", "Not.A/Brand";v="24"'})
 
             await page.goto(url)
 
@@ -658,5 +659,5 @@ async def all(interaction: discord.Interaction):
 
 async def main():
     await bot.start("TOKEN")
-
 asyncio.run(main())
+#asyncio.run(checkout_items("https://www.argos.co.uk/product/6827782?clickSR=slp:term:lego:3:683:1", 2))

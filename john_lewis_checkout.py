@@ -38,7 +38,7 @@ first_checkout = True
 links_file = "john-links"
 data_file = "john-data"
 
-CHANNEL_ID = 1246341750143057950
+CHANNEL_ID = 1262827408810049566
 
 
 cookies = {
@@ -234,14 +234,12 @@ async def checkout_items(url, number_count):
     }
 
     async with async_playwright() as p:
-        browser = await p.chromium.launch(headless=False, args=[
-            "--disable-blink-features=AutomationControlled",
-            "--disable-dev-shm-usage"
-        ])
-        context = await browser.new_context(
-            viewport={"width": 1920, "height": 1580}
-        )
+        browser = await p.chromium.launch(args=["--disable-blink-features=AutomationControlled",
+                                                "--disable-dev-shm-usage"])
+        context = await browser.new_context(viewport={"width": 1920, "height": 1080},
+                                            user_agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 14_5_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.6422.77 Safari/537.36")
         page = await context.new_page()
+        await page.set_extra_http_headers({"sec-ch-ua": '"Chromium";v="125", "Not.A/Brand";v="24"'})
 
         try:
             await page.goto(url)
